@@ -28,10 +28,7 @@
 		</tar>
 
 	</target>
-	<target name="prepare-build">
-		<echo msg="Prepare Build Envoirment " />
-		<delete file="./${buildtar.filename}" />
-	</target>
+
 	<target name="deply-development" depends="prepare-build,prepare-development">
 		<echo msg="Prepare Test Envoirment" />
 
