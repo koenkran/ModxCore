@@ -1,69 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="kranenberg.nl" default="dist">
-	
+
 	<property name="ftp.test.dir" value="domains/${env.bamboo_test_domein}/public_html/" override="true" />
-	<property name="ftp.mode" value="binary"/>
-	<property name="buildtar.filename" value="build.tar.gz"/>
+	<property name="ftp.mode" value="binary" />
+	<property name="buildtar.filename" value="build.tar.gz" />
 
-    <!-- ============================================  -->
-    <!-- Target: prepare                               -->
-    <!-- ============================================  -->
-    <target name="prepare-development">
-        <echo msg="Build test omgeving ${env.bamboo_ftp_host} "/>
-		
-	 	<fileset dir="." id="srcfiles">
-				<exclude name=".buildpath"/>
-				<exclude name=".project"/>
-				<exclude name=".git"/>
-				<exclude name="build-number.txt"/>
-		
-				<exclude name="${buildtar.filename}"/>
-				<exclude name=".**/**"/>
-		</fileset>
-    <property name="mysql.database_name" value="${mysql.database_name}" />
-  <tar destfile="./${buildtar.filename}" compression="gzip">
-     <fileset refid="srcfiles"/>
-  </tar>
-		
-</target>
-<target name="prepare-build">
-<echo msg="Prepare Build Envoirment "/>
-<delete file="./${buildtar.filename}" />
-</target>
-<target name="deply-development" depends="prepare-build,prepare-development">
-<echo msg="Prepare Test Envoirment"/>
-
-<echo msg="FTP Tar to test"/>
-<ftpdeploy host="${env.bamboo_ftp_host}" 
-  username="${env.bamboo_username}" 
-  password="${env.bamboo_password}"
-  dir="${ftp.test.dir}" 
-  passive="true"
-  mode="${ftp.mode}"
-  clearfirst="true"
-  level="debug">
-  <fileset dir="./" >
-	<include name="build.tar.gz" />
-</fileset>
-</ftpdeploy>
-<echo msg="Do SSH tasks"/>
-<ssh username="${env.bamboo_username}" password="${env.bamboo_password}" host="${env.bamboo_ssh_host}" command="tar -C ./${ftp.test.dir} -zxf ./${ftp.test.dir}${buildtar.filename}" />
-<ssh username="${env.bamboo_username}" password="${env.bamboo_password}" host="${env.bamboo_ssh_host}" command="chmod 777 ./${ftp.test.dir}core/cache"/>
-<ssh username="${env.bamboo_username}" password="${env.bamboo_password}" host="${env.bamboo_ssh_host}" command="chmod 777 ./${ftp.test.dir}assets"/>
-<ssh username="${env.bamboo_username}" password="${env.bamboo_password}" host="${env.bamboo_ssh_host}" command="chmod 777 ./${ftp.test.dir}core/components"/>
-<ssh username="${env.bamboo_username}" password="${env.bamboo_password}" host="${env.bamboo_ssh_host}" command="chmod 777 ./${ftp.test.dir}assets/components"/>
-<ssh username="${env.bamboo_username}" password="${env.bamboo_password}" host="${env.bamboo_ssh_host}" command="chmod 777 ./${ftp.test.dir}core/export"/>
-<ssh username="${env.bamboo_username}" password="${env.bamboo_password}" host="${env.bamboo_ssh_host}" command="chmod 777 ./${ftp.test.dir}core/packages"/>
-<ssh username="${env.bamboo_username}" password="${env.bamboo_password}" host="${env.bamboo_ssh_host}" command="chmod 777 ./${ftp.test.dir}core/config/config.inc.php"/>
-
-
-<echo msg="Install Modx"/>
-<ssh username="${env.bamboo_username}" password="${env.bamboo_password}" host="${env.bamboo_ssh_host}" command="php ./${ftp.test.dir}setup/index.php -installmode=new"/>
-<ssh username="${env.bamboo_username}" password="${env.bamboo_password}" host="${env.bamboo_ssh_host}" command="chmod 755 ./${ftp.test.dir}core/config/config.inc.php"/>
-</target>
-
-<target name="prepare-setup" >
+	<!-- ============================================ -->
+	<!-- Target: Install TEST -->
+	<!-- ============================================ -->
 	
-</target>
+	<import file="/build-test.xml"/>
+	
 </project>
