@@ -23,9 +23,9 @@
 <modx>
 	<database_type>mysql</database_type>
     <database_server>localhost</database_server>
-    <database>##DBNAME##</database>
-    <database_user>##DBUSER##</database_user>
-    <database_password>${mysql.database_password}</database_password>
+    <database>koenkran_test</database>
+    <database_user>koenkran_test</database_user>
+    <database_password>test1985</database_password>
     <database_connection_charset>utf8</database_connection_charset>
     <database_charset>utf8</database_charset>
     <database_collation>utf8_general_ci</database_collation>
