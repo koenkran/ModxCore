@@ -11,22 +11,11 @@
 	<!-- ============================================ -->
 	
 	<target name="prepare-development">
-		<echo msg="Build test omgeving ${env.bamboo_ftp_host} " />
-
-		<fileset dir="." id="srcfiles">
-			<exclude name=".buildpath" />
-			<exclude name=".project" />
-			<exclude name=".git" />
-			<exclude name="build-number.txt" />
-
-			<exclude name="${buildtar.filename}" />
-			<exclude name=".**/**" />
-		</fileset>
-		<property name="mysql.database_name" value="${mysql.database_name}" />
+		<echo msg="Maar ${buildtar.filename} voor deploy naar ${ftp.test.dir} " />
+	
 		<tar destfile="./${buildtar.filename}" compression="gzip">
 			<fileset refid="srcfiles" />
 		</tar>
-
 	</target>
 
 	<target name="deply-development" depends="prepare-build,prepare-development">
@@ -65,6 +54,8 @@
 			host="${env.bamboo_ssh_host}" command="php ./${ftp.test.dir}setup/index.php -installmode=new" />
 		<ssh username="${env.bamboo_username}" password="${env.bamboo_password}"
 			host="${env.bamboo_ssh_host}" command="chmod 755 ./${ftp.test.dir}core/config/config.inc.php" />
+		<ssh username="${env.bamboo_username}" password="${env.bamboo_password}"
+			host="${env.bamboo_ssh_host}" command="mv ./${ftp.test.dir}ht.access ./${ftp.test.dir}.htaccess" />
 	</target>
 
 	<target name="prepare-setup">
