@@ -25,7 +25,7 @@
 		</fileset>
 	</target>
 	
-	<target name="prepare-insall-build" depends="prepare-deploy-file">
+	<target name="prepare-intsall-build" depends="prepare-deploy-file">
 		<echo msg="Maar ${buildtar.filename} voor deploy naar ${ftp.test.dir} " />
 	
 		<tar destfile="./${buildtar.filename}" compression="gzip">
