@@ -10,7 +10,7 @@
 	<!-- Target: Install TEST -->
 	<!-- ============================================ -->
 
-	<target name="deply-development" depends="prepare-build,prepare-development">
+	<target name="deploy-testserver">
 		<echo msg="Prepare Test Envoirment" />
 
 		<echo msg="FTP Tar to test" />
