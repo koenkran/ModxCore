@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="kranenberg.nl" default="dist">
+
+	<property name="ftp.test.dir" value="domains/${env.bamboo_test_domein}/public_html/" override="true" />
+	<property name="ftp.mode" value="binary" />
+	<property name="buildtar.filename" value="build.tar.gz" />
+
+	<!-- ============================================ -->
+	<!-- Target: Install TEST -->
+	<!-- ============================================ -->
+	<target name="prepare-build">
+		<echo msg="Prepare Build Envoirment " />
+		<delete file="./${buildtar.filename}" />
+		
+		<echo msg="Maak de fileset aan. " />
+		<fileset dir="." id="srcfiles">
+			<exclude name=".buildpath" />
+			<exclude name=".project" />
+			<exclude name=".git" />
+			<exclude name="build-number.txt" />
+
+			<exclude name="${buildtar.filename}" />
+			<exclude name=".**/**" />
+		</fileset>
+	</target>
+	
+	<target name="prepare-development">
+		<echo msg="Maar ${buildtar.filename} voor deploy naar ${ftp.test.dir} " />
+	
+		<tar destfile="./${buildtar.filename}" compression="gzip">
+			<fileset refid="srcfiles" />
+		</tar>
+	</target>
+</project>

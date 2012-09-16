@@ -2,8 +2,7 @@
 
 <project name="kranenberg.nl" default="dist">
 
-	<property name="ftp.test.dir"
-		value="domains/${env.bamboo_test_domein}/public_html/" override="true" />
+	<property name="ftp.test.dir" value="domains/${env.bamboo_test_domein}/public_html/" override="true" />
 	<property name="ftp.mode" value="binary" />
 	<property name="buildtar.filename" value="build.tar.gz" />
 
@@ -11,20 +10,8 @@
 	<!-- Target: Build OTAP Envoirement -->
 	<!-- ============================================ -->
 
-	<import file="./bamboo/build-test.xml" />
-	<target name="prepare-build">
-		<echo msg="Prepare Build Envoirment " />
-		<delete file="./${buildtar.filename}" />
-		
-		<echo msg="Maak de fileset aan. " />
-		<fileset dir="." id="srcfiles">
-			<exclude name=".buildpath" />
-			<exclude name=".project" />
-			<exclude name=".git" />
-			<exclude name="build-number.txt" />
-
-			<exclude name="${buildtar.filename}" />
-			<exclude name=".**/**" />
-		</fileset>
-	</target>
+	<import file="./bamboo/prepare/build-prepare.xml" />
+	<import file="./bamboo/deploy/build-deploy.xml" />
+	
+	
 </project>
