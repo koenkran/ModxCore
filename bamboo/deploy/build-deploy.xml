@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project name="kranenberg.nl" default="dist">
 
 	<property name="ftp.test.dir" value="domains/${env.bamboo_test_domein}/public_html/" override="true" />
